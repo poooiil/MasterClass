@@ -2,7 +2,6 @@ import os,sys
 ROOT = os.path.abspath(os.path.dirname(__file__))
 sys.path.insert(0, os.path.join(ROOT, "EVA"))
 sys.path.insert(0, os.path.join(ROOT, "utils"))
-# path = "/mnt/fast_nas/xiyingjie/code/priorMD"
 # sys.path.append(path)
 # from model.comMDM import ComMDM
 # from model.ori_mdm import ini_MDM
@@ -16,6 +15,7 @@ from utils.Convert_TRC_MOT import make_animation_matplot
 import math
 
 def distance_3d(point1, point2):
+    #计算两点间欧氏距离，用于后续 CalculateStandardSkeleton 中验证骨骼长度是否符合预期
     x1, y1, z1 = point1
     x2, y2, z2 = point2
     return math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2 + (z2 - z1) ** 2)
@@ -70,8 +70,8 @@ def CalculateStandardSkeleton(joints):
 
 def draw_3dpw_npy(npy_path, save_path):
     data = np.load(npy_path,allow_pickle=True).item()
-    mean  = np.load(os.path.join("/mnt/fast_nas/xiyingjie/code/priorMDM/dataset/3dpw/", 'skel_Mean.npy'))
-    std = np.load(os.path.join("/mnt/fast_nas/xiyingjie/code/priorMDM/dataset/3dpw/", 'skel_Std.npy'))
+    mean  = np.load(os.path.join("../dataset/3dpw/", 'skel_Mean.npy'))
+    std = np.load(os.path.join("..//dataset/3dpw/", 'skel_Std.npy'))
 
     for i in range(len(data)):
         data_sample = data[i]
@@ -98,7 +98,7 @@ def draw_3dpw_npy(npy_path, save_path):
 
         # sample1 = sample.squeeze().cpu().permute(1,0).reshape(120,-1,6), sample1.squeeze().cpu().permute(1,0).reshape(120,-1,6)
 
-        # 1.4 把motions转回成3Djoints坐标
+        # 把motions转回成3Djoints坐标
         # ret, ret1 = sample[:,22,:3], sample1[:,22,:3]
 
         
